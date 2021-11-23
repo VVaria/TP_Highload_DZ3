@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  node_exporter:
+    image: prom/node-exporter
+    ports:
+      - '9100:9100'
+  go-docker-image:
+    build: ./
+    ports:
+      - '8080:8080'
