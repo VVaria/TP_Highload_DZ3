@@ -9,8 +9,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus"
 
-	appHandler "github.com/VVaria/TP_Highload_DZ3/app/http"
-	"github.com/VVaria/TP_Highload_DZ3/app/middleware"
+	appHandler "github.com/VVaria/TP_Highload/http"
+	"github.com/VVaria/TP_Highload/middleware"
 )
 
 var hitsTotal = prometheus.NewCounter(prometheus.CounterOpts{

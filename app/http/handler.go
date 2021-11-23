@@ -2,12 +2,13 @@ package http
 
 import (
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"math/rand"
 	"net/http"
 	"time"
 
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type Handler struct {
@@ -22,7 +23,7 @@ func NewHandler(hits prometheus.Counter) *Handler {
 
 func (ah *Handler) Configure(r *mux.Router) {
 	r.HandleFunc("/main", ah.MainHandler).Methods(http.MethodGet)
-	r.HandleFunc("/metrics", promhttp.Handler()).Methods(http.MethodGet)
+	r.Handle("/metrics", promhttp.Handler()).Methods(http.MethodGet)
 }
 
 func (ah *Handler) MainHandler(w http.ResponseWriter, r *http.Request) {
