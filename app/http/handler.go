@@ -23,7 +23,6 @@ func NewHandler(hits prometheus.Counter) *Handler {
 
 func (ah *Handler) Configure(r *mux.Router) {
 	r.HandleFunc("/main", ah.MainHandler).Methods(http.MethodGet)
-	r.Handle("/metrics", promhttp.Handler()).Methods(http.MethodGet)
 }
 
 func (ah *Handler) MainHandler(w http.ResponseWriter, r *http.Request) {

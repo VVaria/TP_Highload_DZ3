@@ -25,6 +25,7 @@ func main() {
 	handler := appHandler.NewHandler(hitsTotal)
 
 	router := mux.NewRouter()
+	router.Handle("/metrics", promhttp.Handler()).Methods(http.MethodGet)
 	api := router.PathPrefix("/api").Subrouter()
 	api.Use(middleware.AppJSONMiddleware)
 
