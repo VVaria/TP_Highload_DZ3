@@ -37,6 +37,8 @@ func main() {
 		WriteTimeout: 60 * time.Second,
 	}
 
+	fmt.Println("server started:")
+
 	err := server.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)
