@@ -1,0 +1,18 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+scrape_configs:
+
+  - job_name: server1
+    static_configs:
+      - targets: ['213.219.214.213:9100']
+      - targets: ['213.219.214.213:80']
+  - job_name: server2
+    static_configs:
+      - targets: ['185.86.145.147:9100']
+      - targets: ['185.86.145.147:80']
+  - job_name: server3
+    static_configs:
+      - targets: [ '185.86.144.186:9100' ]
+      - targets: [ '185.86.144.186:80' ]
