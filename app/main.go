@@ -31,7 +31,7 @@ func main() {
 	handler.Configure(api)
 
 	server := http.Server{
-		Addr:         fmt.Sprint(":", 8080),
+		Addr:         fmt.Sprint(":", 80),
 		Handler:      router,
 		ReadTimeout:  60 * time.Second,
 		WriteTimeout: 60 * time.Second,
