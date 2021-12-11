@@ -8,6 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	appHandler "github.com/VVaria/TP_Highload_DZ3/app/http"
 	"github.com/VVaria/TP_Highload_DZ3/app/middleware"
