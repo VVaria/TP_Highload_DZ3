@@ -34,6 +34,9 @@ func main() {
 	if err := prometheus.Register(hitsTotal); err != nil {
 		fmt.Println(err)
 	}
+	if err := prometheus.Register(histogramQuantile); err != nil {
+		fmt.Println(err)
+	}
 
 	handler := appHandler.NewHandler(hitsTotal, histogramQuantile)
 
