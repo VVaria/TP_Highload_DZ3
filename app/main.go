@@ -25,11 +25,6 @@ var histogramQuantile = prometheus.NewHistogramVec(
 	[]string{"status"},
 )
 
-func init() {
-	prometheus.MustRegister(hitsTotal)
-	prometheus.MustRegister(histogramQuantile)
-}
-
 func main() {
 	if err := prometheus.Register(hitsTotal); err != nil {
 		fmt.Println(err)
