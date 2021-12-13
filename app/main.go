@@ -54,7 +54,7 @@ func main() {
 		WriteTimeout: 60 * time.Second,
 	}
 
-	fmt.Println("server started:")
+	fmt.Println("server started: version 2")
 
 	err := server.ListenAndServe()
 	if err != nil {
