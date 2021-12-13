@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 	"time"
 
@@ -18,30 +17,25 @@ import (
 var hitsTotal = prometheus.NewCounter(prometheus.CounterOpts{
 	Name: "hits",
 })
+var histogramQuantile = prometheus.NewHistogramVec(
+	prometheus.HistogramOpts{
+		Name:    "request_processing_time_histogram_ms",
+		Buckets: prometheus.LinearBuckets(0.01, 0.05, 10),
+	},
+	[]string{"status"},
+)
+
+func init() {
+	prometheus.MustRegister(hitsTotal)
+	prometheus.MustRegister(histogramQuantile)
+}
 
 func main() {
 	if err := prometheus.Register(hitsTotal); err != nil {
 		fmt.Println(err)
 	}
 
-	requestProcessingTimeHistogramMs := prometheus.NewHistogram(
-		prometheus.HistogramOpts{
-			Name: "request_processing_time_histogram_ms",
-			Buckets: prometheus.LinearBuckets(0, 10, 20),
-		})
-	prometheus.MustRegister(requestProcessingTimeHistogramMs)
-
-	go func(){
-		src := rand.NewSource(time.Now().UnixNano())
-		rnd := rand.New(src)
-		for {
-			obs := float64(100 + rnd.Intn(30))
-			requestProcessingTimeHistogramMs.Observe(obs)
-			time.Sleep(10 * time.Millisecond)
-		}
-	}()
-
-	handler := appHandler.NewHandler(hitsTotal)
+	handler := appHandler.NewHandler(hitsTotal, histogramQuantile)
 
 	router := mux.NewRouter()
 	router.Handle("/metrics", promhttp.Handler()).Methods(http.MethodGet)
