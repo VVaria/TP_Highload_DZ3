@@ -20,6 +20,7 @@ var hitsTotal = prometheus.NewCounter(prometheus.CounterOpts{
 var histogramQuantile = prometheus.NewHistogramVec(
 	prometheus.HistogramOpts{
 		Name:    "request_processing_time_histogram_ms",
+		Buckets: prometheus.LinearBuckets(0.01, 0.05, 10),
 	},
 	[]string{"status"},
 )
