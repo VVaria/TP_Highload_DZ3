@@ -12,13 +12,11 @@ import (
 
 type Handler struct {
 	hits prometheus.Counter
-	histogramQ *prometheus.HistogramVec
 }
 
-func NewHandler(hits prometheus.Counter, histogram *prometheus.HistogramVec) *Handler {
+func NewHandler(hits prometheus.Counter) *Handler {
 	return &Handler{
 		hits: hits,
-		histogramQ: histogram,
 	}
 }
 
@@ -27,12 +25,7 @@ func (ah *Handler) Configure(r *mux.Router) {
 }
 
 func (ah *Handler) MainHandler(w http.ResponseWriter, r *http.Request) {
-	start := time.Now()
 	ah.hits.Inc()
-	var status string
-	defer func() {
-		ah.histogramQ.WithLabelValues(status).Observe(float64(start.Second()))
-	}()
 
 	rand.Seed(time.Now().UnixNano())
 	time.Sleep(time.Duration(rand.Intn(1000)) * time.Microsecond)

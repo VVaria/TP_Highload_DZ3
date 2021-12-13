@@ -33,12 +33,13 @@ func main() {
 		fmt.Println(err)
 	}
 
-	handler := appHandler.NewHandler(hitsTotal, histogramQuantile)
+	handler := appHandler.NewHandler(hitsTotal)
+	mw := middleware.NewMiddleware(histogramQuantile)
 
 	router := mux.NewRouter()
 	router.Handle("/metrics", promhttp.Handler()).Methods(http.MethodGet)
 	api := router.PathPrefix("/api").Subrouter()
-	api.Use(middleware.AppJSONMiddleware)
+	api.Use(mw.AppJSONMiddleware)
 
 	handler.Configure(api)
 
