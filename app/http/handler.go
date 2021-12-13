@@ -35,7 +35,7 @@ func (ah *Handler) MainHandler(w http.ResponseWriter, r *http.Request) {
 	}()
 
 	rand.Seed(time.Now().UnixNano())
-	time.Sleep(time.Duration(rand.Intn(1000)) * time.Millisecond)
+	time.Sleep(time.Duration(rand.Intn(1000)) * time.Microsecond)
 	w.WriteHeader(http.StatusOK)
 	w.Write(JSONMessage("Информация о форуме.", time.Now()))
 }
